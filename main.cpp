@@ -39,7 +39,7 @@ int main(){
 
     int max[n][m] = { { vec[8], vec[9], vec[10] }, // P0 // MAX Matrix
 				{ vec[14], vec[15], vec[16] }, // P1
-				{ vec[20], vec[21]], vec[22] }, // P2
+				{ vec[20], vec[21], vec[22] }, // P2
 				{ vec[26], vec[27], vec[28] }, // P3
 				{ vec[32], vec[33], vec[34] } }; // P4
     
