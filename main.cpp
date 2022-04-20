@@ -4,81 +4,101 @@
 // Banker's Algorithm, code referenced from Geeks for Geeks page
 
 #include <iostream>
+#include <fstream>
+#include <vector>
 using namespace std;
 
-int main()
-{
+int main(){
 	// P0, P1, P2, P3, P4 are the Process names here
 
-int n, m, i, j, k;
-n = 5; // Number of processes
-m = 3; // Number of resources
-int alloc[5][3] = { { 0, 1, 0 }, // P0 // Allocation Matrix
-					{ 2, 0, 0 }, // P1
-					{ 3, 0, 2 }, // P2
-					{ 2, 1, 1 }, // P3
-					{ 0, 0, 2 } }; // P4
+    ifstream in("data.txt");
+    if(!in){
+        cerr << "Input file Error" << endl;
+        exit(1);
+    }
+    int num = 0;
+    vector<int> vec;
+    int n, m, i, j, k; //n = number of processes, m = number of resources
 
-int max[5][3] = { { 7, 5, 3 }, // P0 // MAX Matrix
-				{ 3, 2, 2 }, // P1
-				{ 9, 0, 2 }, // P2
-				{ 2, 2, 2 }, // P3
-				{ 4, 3, 3 } }; // P4
 
-int avail[3] = { 3, 3, 2 }; // Available Resources
+    while(in >> num){
+        vec.push_back(num);
+    }
+    n = vec[0];
+    m = vec[1];
+    vector<int> maxes = {vec[2], vec[3], vec[4]};
 
-int f[n], ans[n], ind = 0;
-for (k = 0; k < n; k++) {
-	f[k] = 0;
-}
-int need[n][m];
-for (i = 0; i < n; i++) {
-	for (j = 0; j < m; j++)
-	need[i][j] = max[i][j] - alloc[i][j];
-}
-int y = 0;
-for (k = 0; k < 5; k++) {
-	for (i = 0; i < n; i++) {
-	if (f[i] == 0) {
 
-		int flag = 0;
-		for (j = 0; j < m; j++) {
-		if (need[i][j] > avail[j]){
-			flag = 1;
-			break;
-		}
-		}
+    //VECTOR ELEMENTS HARCODED FOR THIS ASSIGNMENT BECAUSE WE ONLY NEED TO WORK WITH 1 FILE WITH FIXED VALUES
 
-		if (flag == 0) {
-		ans[ind++] = i;
-		for (y = 0; y < m; y++)
-			avail[y] += alloc[i][y];
-		f[i] = 1;
-		}
-	}
-	}
-}
+    int alloc[n][m] = { { vec[5], vec[6], vec[7] }, // P0 // Allocation Matrix
+					{ vec[11], vec[12], vec[13] }, // P1
+					{ vec[17], vec[18], vec[19] }, // P2
+					{ vec[23], vec[24], vec[25] }, // P3
+					{ vec[29], vec[30], vec[31] } }; // P4
 
-int flag = 1;
+    int max[n][m] = { { vec[8], vec[9], vec[10] }, // P0 // MAX Matrix
+				{ vec[14], vec[15], vec[16] }, // P1
+				{ vec[20], vec[21]], vec[22] }, // P2
+				{ vec[26], vec[27], vec[28] }, // P3
+				{ vec[32], vec[33], vec[34] } }; // P4
+    
+    int avail[m] = { vec[35], vec[36], vec[37] }; // Available Resources
 
-// To check if sequence is safe or not
-for(int i = 0;i<n;i++)
-{
-		if(f[i]==0)
-	{
-		flag = 0;
-		cout << "The given sequence is not safe";
-		break;
-	}
-}
+    int f[n], ans[n], ind = 0;
+    for (k = 0; k < n; k++) {
+	    f[k] = 0;
+    }
+    int need[n][m];
+    for (i = 0; i < n; i++) {
+    	for (j = 0; j < m; j++){
+    	    need[i][j] = max[i][j] - alloc[i][j];
+        }
+    }
+    int y = 0;
+    for (k = 0; k < 5; k++) {
+	    for (i = 0; i < n; i++) {
+	        if (f[i] == 0) {
 
-if(flag==1)
-{
-	cout << "Following is the SAFE Sequence" << endl;
-	for (i = 0; i < n - 1; i++)
-		cout << " P" << ans[i] << " ->";
-	cout << " P" << ans[n - 1] <<endl;
-}
+		        int flag = 0;
+		        for (j = 0; j < m; j++) {
+		            if (need[i][j] > avail[j]){
+		    	        flag = 1;
+		    	        break;
+		            }
+		        }
 
-	return (0);
+		        if (flag == 0) {
+		            ans[ind++] = i;
+		            for (y = 0; y < m; y++){
+			            avail[y] += alloc[i][y];
+                    }
+		            f[i] = 1;
+		        }
+	        }
+	    }
+    }
+
+  int flag = 1;
+   
+  // To check if sequence is safe or not
+  for(int i = 0;i<n;i++)
+  {
+        if(f[i]==0)
+      {
+        flag = 0;
+        cout << "The given sequence is not safe";
+        break;
+      }
+  }
+ 
+  if(flag==1)
+  {
+    cout << "Following is the SAFE Sequence" << endl;
+      for (i = 0; i < n - 1; i++)
+        cout << " P" << ans[i] << " ->";
+      cout << " P" << ans[n - 1] <<endl;
+  }
+ 
+    return (0);
 }
