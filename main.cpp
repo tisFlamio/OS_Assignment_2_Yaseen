@@ -87,14 +87,14 @@ int main(){
         if(f[i]==0)
       {
         flag = 0;
-        cout << "The given sequence is not safe";
+        cout << "The given sequence is unsafe";
         break;
       }
   }
  
   if(flag==1)
   {
-    cout << "Following is the SAFE Sequence" << endl;
+    cout << "Below is the SAFE Sequence" << endl;
       for (i = 0; i < n - 1; i++)
         cout << " P" << ans[i] << " ->";
       cout << " P" << ans[n - 1] <<endl;
